@@ -100,6 +100,7 @@ const updateOrderStatus = async (
   if (!order_id) {
     throw new Error('The Order in not found');
   }
+
   const updateOrder = await prisma.order.update({
     where: { order_id },
     data: {
