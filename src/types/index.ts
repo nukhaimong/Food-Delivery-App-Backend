@@ -27,3 +27,18 @@ export interface MealData {
   price: number;
   is_available: boolean;
 }
+
+export interface OrderData {
+  delivery_address: string;
+  order_status?: string;
+  total_price: number | undefined | null;
+  phone_number: string;
+  order_method?: string;
+}
+
+export enum OrderStatus {
+  pending = 'PENDING',
+  preparing = 'PREPARING',
+  delivered = 'DELIVERED',
+  cancelled = 'CANCELLED',
+}

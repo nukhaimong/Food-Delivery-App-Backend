@@ -13,6 +13,24 @@ router.get(
   orderController.getOrdersById,
 );
 
+router.get(
+  '/customer/:customerId',
+  auth(UserRole.user, UserRole.provider, UserRole.admin),
+  orderController.getOrderByCustomerId,
+);
+
+router.put(
+  '/update/:orderId',
+  auth(UserRole.user, UserRole.provider),
+  orderController.updateOrderStatus,
+);
+
+router.delete(
+  '/delete/:orderId',
+  auth(UserRole.provider, UserRole.admin),
+  orderController.deleteOrder,
+);
+
 router.post(
   '/place',
   auth(UserRole.user, UserRole.provider, UserRole.admin),
