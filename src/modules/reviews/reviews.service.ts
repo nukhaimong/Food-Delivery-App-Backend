@@ -1,4 +1,5 @@
 import { prisma } from '../../lib/prisma';
+import { UserRole } from '../../types';
 
 const createReviews = async (
   customer_id: string,
@@ -28,7 +29,7 @@ const updateReview = async (
     where: { id: review_id },
   });
   if (meal?.customer_id !== customer_id) {
-    throw new Error('You can only update your review');
+    throw new Error('You can only update your own review');
   }
 
   return await prisma.reviews.update({
@@ -39,7 +40,22 @@ const updateReview = async (
   });
 };
 
-const deleteReviews = async (review_id: string) => {
+const deleteReviews = async (
+  review_id: string,
+  customer_id: string,
+  user_role: UserRole,
+) => {
+  const meal = await prisma.reviews.findUnique({
+    where: { id: review_id },
+  });
+
+  if (!meal) {
+    throw new Error('Review not found');
+  }
+
+  if (meal?.customer_id !== customer_id && user_role !== UserRole.admin) {
+    throw new Error('You can only delete your own review');
+  }
   return await prisma.reviews.delete({
     where: { id: review_id },
   });
