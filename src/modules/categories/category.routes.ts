@@ -31,4 +31,4 @@ router.delete(
 
 router.post('/post', auth(UserRole.admin), categoryController.createCategory);
 
-export const categoryRouter = router;
+export const categoryRoutes = router;

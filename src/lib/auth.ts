@@ -2,6 +2,11 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 // If your Prisma file is located elsewhere, you can change the path
 import { prisma } from './prisma';
+
+enum UserStatus {
+  active = 'ACTIVE',
+  suspended = 'SUSPENDED',
+}
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql', // or "mysql", "postgresql", ...etc
@@ -17,6 +22,12 @@ export const auth = betterAuth({
       photo_url: {
         type: 'string',
         required: false,
+      },
+      status: {
+        type: 'string',
+        defaultValue: UserStatus.active,
+        enum: [UserStatus.active, UserStatus.suspended],
+        required: true,
       },
     },
   },
