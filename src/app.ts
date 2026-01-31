@@ -7,6 +7,7 @@ import { providerProfileRoutes } from './modules/providerProfile/providerProfile
 import { mealsRoutes } from './modules/meals/meals.routes';
 import { orderRoutes } from './modules/orders/order.routes';
 import { reviewsRoutes } from './modules/reviews/reviews.routes';
+import { userRoutes } from './modules/user/user.routes';
 
 const app: Application = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use('/provider-profile', providerProfileRoutes);
 app.use('/meals', mealsRoutes);
 app.use('/order', orderRoutes);
 app.use('/reviews', reviewsRoutes);
+app.use('/users', userRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Food Delivery App Backend is running!');

@@ -43,3 +43,8 @@ export enum OrderStatus {
   delivered = 'DELIVERED',
   cancelled = 'CANCELLED',
 }
+
+export enum UserStatus {
+  active = 'ACTIVE',
+  suspended = 'SUSPENDED',
+}

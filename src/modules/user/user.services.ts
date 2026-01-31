@@ -1,4 +1,5 @@
 import { prisma } from '../../lib/prisma';
+import { UserStatus } from '../../types';
 
 const getAllUsers = async () => {
   return await prisma.user.findMany();
@@ -11,7 +12,19 @@ const getUserById = async (userId: string) => {
     },
     include: {
       orders: {
-        select: { order_method: true, order_status: true, orderItems: true },
+        select: {
+          order_method: true,
+          order_status: true,
+          orderItems: {
+            select: {
+              meal: { select: { meal_name: true } },
+              price: true,
+              quantity: true,
+              createdAt: true,
+              updatedAt: true,
+            },
+          },
+        },
       },
     },
   });
@@ -25,15 +38,16 @@ const updateUser = async (
     where: { id: userId },
     data,
   });
+  return updatedUser;
 };
 
-const suspendOrActiveUser = async (useId: string, isActive: boolean) => {
+const suspendOrActivateUser = async (useId: string, status: UserStatus) => {
   return await prisma.user.update({
     where: {
       id: useId,
     },
     data: {
-      isActive,
+      status,
     },
   });
 };
@@ -46,6 +60,6 @@ export const userService = {
   getAllUsers,
   getUserById,
   updateUser,
-  suspendOrActiveUser,
+  suspendOrActivateUser,
   deleteUser,
 };
