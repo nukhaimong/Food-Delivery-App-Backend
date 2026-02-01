@@ -1,5 +1,5 @@
 import { prisma } from '../../lib/prisma';
-import { MealData } from '../../types';
+import { MealData, SortPrice } from '../../types';
 
 const createMeal = async (
   provider_id: string,
@@ -25,8 +25,23 @@ const createMeal = async (
   return meal;
 };
 
-const getMeals = async () => {
-  return await prisma.foodMeal.findMany();
+const getMeals = async (sortprice: SortPrice, category_name: string) => {
+  return await prisma.foodMeal.findMany({
+    where: {
+      is_available: true,
+      ...(category_name && {
+        category: {
+          category_name: category_name,
+        },
+      }),
+    },
+    orderBy: [
+      {
+        price: sortprice === 'desc' ? 'desc' : 'asc',
+      },
+      { createdAt: 'desc' },
+    ],
+  });
 };
 
 const getMealsByCategory = async (category_id: string) => {

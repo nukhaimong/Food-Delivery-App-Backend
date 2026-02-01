@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { mealsService } from './meals.service';
-import { UserStatus } from '../../types';
+import { SortPrice, UserStatus } from '../../types';
 
 const createMeal = async (req: Request, res: Response) => {
   try {
@@ -50,7 +50,11 @@ const createMeal = async (req: Request, res: Response) => {
 
 const getMeals = async (req: Request, res: Response) => {
   try {
-    const meals = await mealsService.getMeals();
+    const { sortprice, category_name } = req.query;
+    const meals = await mealsService.getMeals(
+      sortprice as SortPrice,
+      category_name as string,
+    );
     if (meals.length === 0) {
       return res.status(404).json({
         success: false,

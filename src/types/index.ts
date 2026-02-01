@@ -49,3 +49,5 @@ export enum UserStatus {
   active = 'ACTIVE',
   suspended = 'SUSPENDED',
 }
+
+export type SortPrice = 'desc' | 'asc';
