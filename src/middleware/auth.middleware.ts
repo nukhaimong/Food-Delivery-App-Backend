@@ -1,20 +1,18 @@
-import { NextFunction, Request, Response } from "express";
-import { UserRole } from "../types";
-import {auth as betterAuth} from '../lib/auth'
-import { success } from "better-auth";
+import { NextFunction, Request, Response } from 'express';
+import { UserRole, UserStatus } from '../types';
+import { auth as betterAuth } from '../lib/auth';
 
 const auth = (...roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
-
     try {
       const session = await betterAuth.api.getSession({
-        headers: req.headers as any
-      })
-      if(!session || !session.user) {
+        headers: req.headers as any,
+      });
+      if (!session || !session.user) {
         return res.status(401).json({
           success: false,
-          message: 'You are not authenticated'
-        })
+          message: 'You are not authenticated',
+        });
       }
 
       req.user = {
@@ -22,22 +20,22 @@ const auth = (...roles: UserRole[]) => {
         name: session.user.name,
         email: session.user.email,
         user_role: session.user.user_role as UserRole,
-        photo_url: session.user.photo_url || undefined
-      }
+        image: session.user.image || undefined,
+        status: session.user.status as UserStatus,
+      };
 
-      if(roles.length && !roles.includes(req.user.user_role)) {
+      if (roles.length && !roles.includes(req.user.user_role)) {
         return res.status(403).json({
           success: false,
-          message: "Forbiden! You're not authorized"
-        })
+          message: "Forbiden! You're not authorized",
+        });
       }
 
-      next()
-
+      next();
     } catch (error) {
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ message: 'Internal server error' });
     }
-  }
-}
+  };
+};
 
 export default auth;

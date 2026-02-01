@@ -6,7 +6,8 @@ declare global {
         email: string;
         name: string;
         user_role: UserRole;
-        photo_url?: string | undefined;
+        image?: string | undefined;
+        status: UserStatus;
       };
     }
   }

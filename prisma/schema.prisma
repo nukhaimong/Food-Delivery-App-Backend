@@ -30,7 +30,6 @@ model User {
   reviews         Reviews[]
   providerProfile ProviderProfile?
 
-  photo_url String?
   status    String  @default("ACTIVE")
 
   @@unique([email])
