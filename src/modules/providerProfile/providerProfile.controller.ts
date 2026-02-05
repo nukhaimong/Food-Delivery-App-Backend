@@ -12,13 +12,15 @@ const createProviderProfile = async (req: Request, res: Response) => {
     }
 
     const provider_id = req.user?.id as string;
-    const { restaurant_name, address, phone_number } = req.body;
+    const { restaurant_name, address, phone_number, restaurant_image } =
+      req.body;
 
     const profile = await providerProfileService.createProviderProfile({
       provider_id,
       restaurant_name,
       address,
       phone_number,
+      restaurant_image,
     });
     return res.status(201).json({
       success: true,

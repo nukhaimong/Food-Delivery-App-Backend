@@ -6,11 +6,13 @@ interface ProviderProfile {
   restaurant_name: string;
   address: string;
   phone_number: string;
+  restaurant_image: string;
 }
 interface ProviderProfileUpdate {
   restaurant_name?: string;
   address?: string;
   phone_number?: string;
+  restaurant_image?: string;
 }
 
 const createProviderProfile = async ({
@@ -18,15 +20,24 @@ const createProviderProfile = async ({
   restaurant_name,
   address,
   phone_number,
+  restaurant_image,
 }: ProviderProfile) => {
-  if (!provider_id || !restaurant_name || !address || !phone_number) {
+  if (
+    !provider_id ||
+    !restaurant_name ||
+    !address ||
+    !phone_number ||
+    !restaurant_image
+  ) {
     throw new Error('All fields are required to create a provider profile');
   }
   const existingProfile = await prisma.providerProfile.findUnique({
     where: { provider_id },
   });
   if (existingProfile) {
-    throw new Error('Provider profile already exists for this provider');
+    await prisma.providerProfile.delete({
+      where: { provider_id },
+    });
   }
   const profile = await prisma.providerProfile.create({
     data: {
@@ -34,6 +45,7 @@ const createProviderProfile = async ({
       restaurant_name,
       address,
       phone_number,
+      restaurant_image,
     },
   });
   return profile;

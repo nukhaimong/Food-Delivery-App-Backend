@@ -30,7 +30,7 @@ model User {
   reviews         Reviews[]
   providerProfile ProviderProfile?
 
-  status    String  @default("ACTIVE")
+  status String @default("ACTIVE")
 
   @@unique([email])
   @@map("user")
@@ -85,14 +85,15 @@ model Verification {
 }
 
 model ProviderProfile {
-  id              String   @id @default(uuid())
-  provider_id     String   @unique
-  user            User     @relation(fields: [provider_id], references: [id], onDelete: Cascade)
-  restaurant_name String
-  address         String
-  phone_number    String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id               String   @id @default(uuid())
+  provider_id      String   @unique
+  user             User     @relation(fields: [provider_id], references: [id], onDelete: Cascade)
+  restaurant_name  String
+  restaurant_image String   @default("")
+  address          String
+  phone_number     String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@map("provider_profile")
 }

@@ -5,17 +5,9 @@ import { categoryController } from './category.controller';
 
 const router = express.Router();
 
-router.get(
-  '/',
-  auth(UserRole.admin, UserRole.provider),
-  categoryController.getAllCategories,
-);
+router.get('/', categoryController.getAllCategories);
 
-router.get(
-  '/:categoryId',
-  auth(UserRole.admin, UserRole.provider),
-  categoryController.getCategoryById,
-);
+router.get('/:categoryId', categoryController.getCategoryById);
 
 router.put(
   '/:categoryId',
