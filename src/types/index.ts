@@ -1,3 +1,5 @@
+import { OrderMethod, OrderStatus } from "../../generated/prisma/enums";
+
 declare global {
   namespace Express {
     interface Request {
@@ -30,20 +32,17 @@ export interface MealData {
 }
 
 export interface OrderData {
-  delivery_address: string;
-  order_status?: string;
+  providerProfile_id: string;
+  meal_id: string;
+  price: number;
+  quantity: number;
   total_price: number | undefined | null;
+  delivery_address: string;
+  order_status?: OrderStatus;
   phone_number: string;
-  order_method?: string;
-  orderItems: [{ meal_id: string; price: number; quantity: number }];
+  order_method?: OrderMethod;
 }
 
-export enum OrderStatus {
-  pending = 'PENDING',
-  preparing = 'PREPARING',
-  delivered = 'DELIVERED',
-  cancelled = 'CANCELLED',
-}
 
 export enum UserStatus {
   active = 'ACTIVE',

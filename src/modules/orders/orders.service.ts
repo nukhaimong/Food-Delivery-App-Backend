@@ -1,52 +1,23 @@
+import { OrderStatus } from '../../../generated/prisma/enums';
 import { prisma } from '../../lib/prisma';
-import { OrderData, OrderStatus } from '../../types';
+import { OrderData } from '../../types';
 
-const createOrder = async (customer_id: string, data: OrderData) => {
-  if (
-    !data.delivery_address?.trim() ||
-    !data.phone_number?.trim() ||
-    data.orderItems.length < 1
-  ) {
-    throw new Error('You must provide all required information');
+const createOrder = async (customer_id: string, data: OrderData[]) => {
+  if(data.length > 1) {
+    throw new Error('Minimum One Item is required')
   }
-  const total_price = data.orderItems.reduce((sum, items) => {
-    return sum + items.price * items.quantity;
-  }, 0);
+  
+  const formattedData = data.map((item) => ({
+    ...item,
+    total_price: item.price * item.quantity,
+    customer_id: customer_id,
+  }))
 
-  const order = await prisma.order.create({
-    data: {
-      delivery_address: data.delivery_address,
-      phone_number: data.phone_number,
-      customer_id: customer_id,
-      total_price: total_price,
-      orderItems: {
-        create: data.orderItems.map((items) => ({
-          meal_id: items.meal_id,
-          price: items.price,
-          quantity: items.quantity,
-        })),
-      },
-    },
-    include: {
-      customer: {
-        select: { name: true, image: true },
-      },
-      orderItems: {
-        include: {
-          meal: {
-            select: {
-              provider: { select: { name: true, image: true } },
-              category: { select: { category_name: true } },
-              meal_name: true,
-              image_url: true,
-              description: true,
-              price: true,
-            },
-          },
-        },
-      },
-    },
-  });
+  const order = await prisma.order.createMany({
+    data: formattedData,
+    skipDuplicates: true,
+  })
+  
   return order;
 };
 
@@ -61,20 +32,6 @@ const getOrderById = async (order_id: string) => {
       customer: {
         select: { name: true, image: true },
       },
-      orderItems: {
-        include: {
-          meal: {
-            select: {
-              provider: { select: { name: true, image: true } },
-              category: { select: { category_name: true } },
-              meal_name: true,
-              image_url: true,
-              description: true,
-              price: true,
-            },
-          },
-        },
-      },
     },
   });
 };
@@ -85,20 +42,6 @@ const getOrderByCustomerId = async (customer_id: string) => {
     include: {
       customer: {
         select: { name: true, image: true },
-      },
-      orderItems: {
-        include: {
-          meal: {
-            select: {
-              provider: { select: { name: true, image: true } },
-              category: { select: { category_name: true } },
-              meal_name: true,
-              image_url: true,
-              description: true,
-              price: true,
-            },
-          },
-        },
       },
     },
   });
