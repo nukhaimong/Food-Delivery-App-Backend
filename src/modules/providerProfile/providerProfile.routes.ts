@@ -5,11 +5,7 @@ import { providerProfileController } from './providerProfile.controller';
 
 const router = express.Router();
 
-router.get(
-  '/',
-  auth(UserRole.provider),
-  providerProfileController.getAllProvider,
-);
+router.get('/', providerProfileController.getAllProviderProfile);
 
 router.get(
   '/me',

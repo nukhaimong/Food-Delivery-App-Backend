@@ -52,12 +52,14 @@ const createProviderProfile = async ({
   return profile;
 };
 
-const getAllProvider = async () => {
-  const profiles = await prisma.user.findMany({
-    where: { user_role: UserRole.provider },
+const getAllProviderProfile = async () => {
+  const profiles = await prisma.providerProfile.findMany({
     include: {
-      providerProfile: true,
-      foodMeals: true,
+      user: {
+        include: {
+          foodMeals: true,
+        },
+      },
     },
   });
   return profiles;
@@ -118,7 +120,7 @@ const deleteProviderProfile = async (provider_id: string) => {
 
 export const providerProfileService = {
   createProviderProfile,
-  getAllProvider,
+  getAllProviderProfile,
   getProviderById,
   getProviderOwnProfile,
   updateProviderProfile,

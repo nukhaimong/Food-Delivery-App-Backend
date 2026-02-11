@@ -94,6 +94,7 @@ model ProviderProfile {
   phone_number     String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+  orders           Order[]
 
   @@map("provider_profile")
 }
@@ -101,7 +102,7 @@ model ProviderProfile {
 model FoodCategory {
   id             String     @id @default(uuid())
   category_name  String
-  category_image String @default("")
+  category_image String     @default("")
   description    String?
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
@@ -121,8 +122,8 @@ model FoodMeal {
   is_available Boolean      @default(true)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-  orderItems   OrderItems[]
   reviews      Reviews[]
+  orders       Order[]
 
   @@index([provider_id])
   @@index([category_id])
@@ -130,36 +131,35 @@ model FoodMeal {
 }
 
 model Order {
-  order_id         String       @id @default(uuid())
-  customer_id      String
-  customer         User         @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  order_id           String @id @default(uuid())
+  providerProfile_id String
+
+  providerProfile ProviderProfile @relation(fields: [providerProfile_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  customer_id String
+  customer    User   @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+
+  meal_id String
+  meal    FoodMeal @relation(fields: [meal_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  price    Float
+  quantity Int
+
   delivery_address String
   phone_number     String
-  total_price      Float
-  order_status     OrderStatus  @default(PENDING)
-  order_method     OrderMethod  @default(CASH_ON)
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  orderItems       OrderItems[]
 
-  @@index([customer_id])
-  @@map("order")
-}
+  total_price  Float
+  order_status OrderStatus @default(PENDING)
 
-model OrderItems {
-  id        String   @id @default(uuid())
-  order_id  String
-  order     Order    @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
-  meal_id   String
-  meal      FoodMeal @relation(fields: [meal_id], references: [id], onDelete: Cascade)
-  price     Float
-  quantity  Int
+  order_method OrderMethod @default(CASH_ON)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([order_id])
+  @@index([customer_id])
   @@index([meal_id])
-  @@map("order_items")
+  @@index([providerProfile_id])
+  @@map("order")
 }
 
 model Reviews {

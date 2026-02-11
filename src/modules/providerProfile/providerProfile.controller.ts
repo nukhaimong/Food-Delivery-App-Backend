@@ -37,7 +37,7 @@ const createProviderProfile = async (req: Request, res: Response) => {
   }
 };
 
-const getAllProvider = async (req: Request, res: Response) => {
+const getAllProviderProfile = async (req: Request, res: Response) => {
   try {
     if (req.user?.status === UserStatus.suspended) {
       return res.status(400).json({
@@ -46,11 +46,12 @@ const getAllProvider = async (req: Request, res: Response) => {
       });
     }
 
-    const allProviders = await providerProfileService.getAllProvider();
+    const allProvidersProfiles =
+      await providerProfileService.getAllProviderProfile();
     return res.status(200).json({
       success: true,
       message: 'All provider profiles retrieved successfully',
-      allProviders,
+      allProvidersProfiles,
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -177,7 +178,7 @@ const deleteProviderProfile = async (req: Request, res: Response) => {
 
 export const providerProfileController = {
   createProviderProfile,
-  getAllProvider,
+  getAllProviderProfile,
   getProviderById,
   getProviderOwnProfile,
   updateProviderProfile,

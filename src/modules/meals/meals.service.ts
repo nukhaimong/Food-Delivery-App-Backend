@@ -30,6 +30,26 @@ const getMeals = async (sortprice: SortPrice, category_name: string) => {
         },
       }),
     },
+    include: {
+      provider: {
+        select: {
+          id: true,
+          name: true,
+          providerProfile: {
+            select: {
+              id: true,
+              restaurant_name: true,
+            },
+          },
+        },
+      },
+      category: {
+        select: {
+          id: true,
+          category_name: true,
+        },
+      },
+    },
     orderBy: [
       {
         price: sortprice === 'desc' ? 'desc' : 'asc',
