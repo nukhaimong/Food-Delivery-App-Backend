@@ -53,15 +53,7 @@ const createProviderProfile = async ({
 };
 
 const getAllProviderProfile = async () => {
-  const profiles = await prisma.providerProfile.findMany({
-    include: {
-      user: {
-        include: {
-          foodMeals: true,
-        },
-      },
-    },
-  });
+  const profiles = await prisma.providerProfile.findMany({});
   return profiles;
 };
 

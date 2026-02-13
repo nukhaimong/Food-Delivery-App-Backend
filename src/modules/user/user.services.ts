@@ -15,15 +15,6 @@ const getUserById = async (userId: string) => {
         select: {
           order_method: true,
           order_status: true,
-          orderItems: {
-            select: {
-              meal: { select: { meal_name: true } },
-              price: true,
-              quantity: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
         },
       },
     },

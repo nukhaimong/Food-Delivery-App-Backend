@@ -73,12 +73,31 @@ const getOrdersById = async (req: Request, res: Response) => {
 
 const getOrderByCustomerId = async (req: Request, res: Response) => {
   try {
-    const customerId = req.params.customerId as string;
-    const order = await orderService.getOrderByCustomerId(customerId);
+    const customerId = req.user?.id as string;
+    const orders = await orderService.getOrderByCustomerId(customerId);
     res.status(200).json({
       success: true,
       message: 'Order retrieved successfully',
-      order,
+      orders,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message || 'Server Side Error',
+      });
+    }
+  }
+};
+
+const getOrderByProviderId = async (req: Request, res: Response) => {
+  try {
+    const provider_id = req.user?.id as string;
+    const orders = await orderService.getOrderByProviderId(provider_id);
+    res.status(200).json({
+      success: true,
+      message: 'Orders retrieved successfully',
+      orders,
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -91,6 +110,7 @@ const getOrderByCustomerId = async (req: Request, res: Response) => {
 };
 
 const updateOrderStatus = async (req: Request, res: Response) => {
+  'hitted here';
   try {
     if (req.user?.status === UserStatus.suspended) {
       return res.status(400).json({
@@ -100,6 +120,8 @@ const updateOrderStatus = async (req: Request, res: Response) => {
     }
     const orderId = req.params.orderId as string;
     const order_status = req.body.order_status;
+
+    console.log(order_status);
 
     if (
       req.user?.user_role === UserRole.user &&
@@ -160,6 +182,7 @@ export const orderController = {
   getOrders,
   getOrdersById,
   getOrderByCustomerId,
+  getOrderByProviderId,
   updateOrderStatus,
   deleteOrder,
 };

@@ -20,13 +20,11 @@ const createOrder = async (customer_id: string, data: OrderData[]) => {
     skipDuplicates: true,
   });
 
-  console.log(order);
-
   return order;
 };
 
 const getOrders = async () => {
-  return await prisma.order.findMany();
+  return await prisma.order.findMany({});
 };
 
 const getOrderById = async (order_id: string) => {
@@ -44,11 +42,53 @@ const getOrderByCustomerId = async (customer_id: string) => {
   return await prisma.order.findMany({
     where: { customer_id },
     include: {
-      customer: {
-        select: { name: true, image: true },
+      meal: {
+        select: {
+          meal_name: true,
+        },
+      },
+      providerProfile: {
+        select: {
+          restaurant_name: true,
+          phone_number: true,
+        },
       },
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
+};
+
+const getOrderByProviderId = async (provider_id: string) => {
+  const orderData = await prisma.$transaction(async (tx) => {
+    const providerProfile = await tx.providerProfile.findUnique({
+      where: { provider_id: provider_id },
+      select: {
+        id: true,
+      },
+    });
+    if (!providerProfile) {
+      throw new Error('Provider Not found');
+    }
+
+    const providerProfile_id = providerProfile?.id;
+    const order = await tx.order.findMany({
+      where: {
+        providerProfile_id: providerProfile_id as string,
+      },
+      include: {
+        providerProfile: {
+          select: {
+            id: true,
+            restaurant_name: true,
+          },
+        },
+      },
+    });
+    return order;
+  });
+  return orderData;
 };
 
 const updateOrderStatus = async (
@@ -81,4 +121,5 @@ export const orderService = {
   getOrderByCustomerId,
   updateOrderStatus,
   deleteOrder,
+  getOrderByProviderId,
 };

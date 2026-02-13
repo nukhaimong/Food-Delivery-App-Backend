@@ -66,18 +66,15 @@ const getMealsByCategory = async (category_id: string) => {
     },
     include: {
       category: {
-        select: { category_name: true },
+        select: { id: true, category_name: true },
       },
       provider: {
         select: {
+          id: true,
           name: true,
-          status: true,
-          image: true,
           providerProfile: {
             select: {
               restaurant_name: true,
-              address: true,
-              phone_number: true,
             },
           },
         },
@@ -93,18 +90,15 @@ const getMealsByProvider = async (provider_id: string) => {
     },
     include: {
       category: {
-        select: { category_name: true },
+        select: { id: true, category_name: true },
       },
       provider: {
         select: {
+          id: true,
           name: true,
-          status: true,
-          image: true,
           providerProfile: {
             select: {
               restaurant_name: true,
-              address: true,
-              phone_number: true,
             },
           },
         },

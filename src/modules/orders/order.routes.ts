@@ -8,15 +8,21 @@ const router = express.Router();
 router.get('/', auth(UserRole.admin), orderController.getOrders);
 
 router.get(
-  '/:orderId',
+  '/customer',
   auth(UserRole.user, UserRole.provider, UserRole.admin),
-  orderController.getOrdersById,
+  orderController.getOrderByCustomerId,
 );
 
 router.get(
-  '/customer/:customerId',
+  '/provider',
+  auth(UserRole.provider),
+  orderController.getOrderByProviderId,
+);
+
+router.get(
+  '/:orderId',
   auth(UserRole.user, UserRole.provider, UserRole.admin),
-  orderController.getOrderByCustomerId,
+  orderController.getOrdersById,
 );
 
 router.put(
