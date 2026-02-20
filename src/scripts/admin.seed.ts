@@ -25,6 +25,7 @@ const adminSeed = async () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Origin: 'https://food-delivery-app-frontend-umber.vercel.app',
         },
         body: JSON.stringify(adminData),
       },
