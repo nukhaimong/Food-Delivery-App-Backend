@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { mealsService } from './meals.service';
-import { SortPrice, UserStatus } from '../../types';
+import { mealsService } from './meals.service.js';
+import { SortPrice, UserStatus } from '../../types/index.js';
 
 const createMeal = async (req: Request, res: Response) => {
   try {

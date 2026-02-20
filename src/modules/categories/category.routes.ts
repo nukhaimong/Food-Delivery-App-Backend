@@ -1,7 +1,7 @@
 import express from 'express';
-import auth from '../../middleware/auth.middleware';
-import { UserRole } from '../../types';
-import { categoryController } from './category.controller';
+import auth from '../../middleware/auth.middleware.js';
+import { UserRole } from '../../types/index.js';
+import { categoryController } from './category.controller.js';
 
 const router = express.Router();
 

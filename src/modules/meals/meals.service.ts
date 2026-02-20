@@ -1,5 +1,5 @@
 import { prisma } from '../../lib/prisma.js';
-import { MealData, SortPrice } from '../../types';
+import { MealData, SortPrice } from '../../types/index.js';
 
 const createMeal = async (provider_id: string, data: MealData) => {
   if (!provider_id || !data.category_id || !data.meal_name || !data.price) {

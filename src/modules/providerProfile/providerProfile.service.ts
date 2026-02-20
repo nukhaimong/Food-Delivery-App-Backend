@@ -1,5 +1,4 @@
 import { prisma } from '../../lib/prisma.js';
-import { UserRole } from '../../types';
 
 interface ProviderProfile {
   provider_id: string;

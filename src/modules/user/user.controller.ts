@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { userService } from './user.services';
-import { UserStatus } from '../../types';
+import { userService } from './user.services.js';
+import { UserStatus } from '../../types/index.js';
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { providerProfileService } from './providerProfile.service';
-import { UserStatus } from '../../types';
+import { providerProfileService } from './providerProfile.service.js';
+import { UserStatus } from '../../types/index.js';
 
 const createProviderProfile = async (req: Request, res: Response) => {
   try {

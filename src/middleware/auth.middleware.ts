@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { UserRole, UserStatus } from '../types';
-import { auth as betterAuth } from '../lib/auth';
+import { UserRole, UserStatus } from '../types/index.js';
+import { auth as betterAuth } from '../lib/auth.js';
 
 const auth = (...roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {

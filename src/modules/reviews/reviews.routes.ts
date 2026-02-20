@@ -1,7 +1,7 @@
 import express from 'express';
-import auth from '../../middleware/auth.middleware';
-import { UserRole } from '../../types';
-import { reviewsController } from './reviews.controller';
+import auth from '../../middleware/auth.middleware.js';
+import { UserRole } from '../../types/index.js';
+import { reviewsController } from './reviews.controller.js';
 
 const router = express.Router();
 

@@ -1,13 +1,13 @@
-import express, { Application, Request, request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import { toNodeHandler } from 'better-auth/node';
-import { auth } from './lib/auth';
-import { categoryRoutes } from './modules/categories/category.routes';
+import { auth } from './lib/auth.js';
+import { categoryRoutes } from './modules/categories/category.routes.js';
 import cors from 'cors';
-import { providerProfileRoutes } from './modules/providerProfile/providerProfile.routes';
-import { mealsRoutes } from './modules/meals/meals.routes';
-import { orderRoutes } from './modules/orders/order.routes';
-import { reviewsRoutes } from './modules/reviews/reviews.routes';
-import { userRoutes } from './modules/user/user.routes';
+import { providerProfileRoutes } from './modules/providerProfile/providerProfile.routes.js';
+import { mealsRoutes } from './modules/meals/meals.routes.js';
+import { orderRoutes } from './modules/orders/order.routes.js';
+import { reviewsRoutes } from './modules/reviews/reviews.routes.js';
+import { userRoutes } from './modules/user/user.routes.js';
 
 const app: Application = express();
 app.use(express.json());

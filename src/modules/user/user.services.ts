@@ -1,5 +1,5 @@
 import { prisma } from '../../lib/prisma.js';
-import { UserStatus } from '../../types';
+import { UserStatus } from '../../types/index.js';
 
 const getAllUsers = async () => {
   return await prisma.user.findMany();

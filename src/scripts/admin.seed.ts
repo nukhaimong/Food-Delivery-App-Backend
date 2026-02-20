@@ -1,4 +1,4 @@
-import { UserRole } from '../types';
+import { UserRole } from '../types/index.js';
 import { prisma } from '../lib/prisma.js';
 
 const adminSeed = async () => {

@@ -1,5 +1,5 @@
 import { prisma } from '../../lib/prisma.js';
-import { UserRole } from '../../types';
+import { UserRole } from '../../types/index.js';
 
 const createReviews = async (
   customer_id: string,

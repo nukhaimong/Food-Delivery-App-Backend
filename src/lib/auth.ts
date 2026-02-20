@@ -2,7 +2,7 @@ import { betterAuth, boolean } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 // If your Prisma file is located elsewhere, you can change the path
 import { prisma } from './prisma.js';
-import { UserStatus } from '../types';
+import { UserStatus } from '../types/index.js';
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {

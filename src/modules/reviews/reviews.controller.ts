@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { reviewService } from './reviews.service';
-import { UserRole, UserStatus } from '../../types';
+import { reviewService } from './reviews.service.js';
+import { UserRole, UserStatus } from '../../types/index.js';
 
 const createReviews = async (req: Request, res: Response) => {
   try {
