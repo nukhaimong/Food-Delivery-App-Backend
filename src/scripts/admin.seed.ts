@@ -20,7 +20,7 @@ const adminSeed = async () => {
     }
 
     const adminSignUp = await fetch(
-      'http://localhost:8080/api/auth/sign-up/email',
+      'https://food-delivery-app-backend-58qb.onrender.com/api/auth/sign-up/email',
       {
         method: 'POST',
         headers: {
