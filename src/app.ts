@@ -21,8 +21,6 @@ app.use(
   }),
 );
 
-// Explicitly handle OPTIONS requests
-app.options('*', cors());
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use('/category', categoryRoutes);
 app.use('/provider-profile', providerProfileRoutes);
