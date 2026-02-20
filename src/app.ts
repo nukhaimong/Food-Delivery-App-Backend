@@ -15,6 +15,8 @@ app.use(
   cors({
     origin: 'https://food-delivery-app-frontend-umber.vercel.app',
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   }),
 );
 app.all('/api/auth/{*any}', toNodeHandler(auth));
