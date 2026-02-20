@@ -17,8 +17,12 @@ app.use(
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+    exposedHeaders: ['set-cookie'],
   }),
 );
+
+// Explicitly handle OPTIONS requests
+app.options('*', cors());
 app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use('/category', categoryRoutes);
 app.use('/provider-profile', providerProfileRoutes);
