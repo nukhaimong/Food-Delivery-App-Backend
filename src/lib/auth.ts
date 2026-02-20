@@ -8,7 +8,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql', // or "mysql", "postgresql", ...etc
   }),
-  trustedOrigins: [process.env.APP_URL as string],
+  trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
   cookies: {
     secure: true,
     sameSite: 'none',
