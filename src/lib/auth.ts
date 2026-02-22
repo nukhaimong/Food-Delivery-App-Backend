@@ -10,16 +10,18 @@ export const auth = betterAuth({
   }),
   trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
   session: {
-    expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60 * 24, // 1 day (update session expiration every day)
-    cookie: {
-      name: 'session_token',
-      attributes: {
-        secure: true,
-        sameSite: 'none',
-        httpOnly: true,
-      },
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes
     },
+  },
+  advanced: {
+    cookiePrefix: 'better-auth',
+    useSecureCookies: process.env.NODE_ENV === 'production',
+    crossSubDomainCookies: {
+      enabled: false,
+    },
+    disableCSRFCheck: true, // Allow requests without Origin header (Postman, mobile apps, etc.)
   },
 
   baseURL: 'https://food-delivery-app-backend-58qb.onrender.com/api/auth',
