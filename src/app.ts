@@ -21,7 +21,7 @@ app.use(
   }),
 );
 
-app.all('/api/auth/{*any}', toNodeHandler(auth));
+app.all('/api/auth', toNodeHandler(auth));
 app.use('/category', categoryRoutes);
 app.use('/provider-profile', providerProfileRoutes);
 app.use('/meals', mealsRoutes);

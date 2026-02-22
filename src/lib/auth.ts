@@ -14,6 +14,7 @@ export const auth = betterAuth({
     sameSite: 'none',
     httpOnly: true,
   },
+  baseURL: 'https://food-delivery-app-backend-58qb.onrender.com/api/auth',
 
   user: {
     additionalFields: {
