@@ -14,6 +14,8 @@ export const auth = betterAuth({
       enabled: true,
       maxAge: 5 * 60, // 5 minutes
     },
+    expiresIn: 60 * 60 * 24 * 7, // 7 days - PERSISTENT LOGIN
+    updateAge: 60 * 60 * 24, // Update every 24 hours
   },
 
   advanced: {
@@ -22,22 +24,19 @@ export const auth = betterAuth({
     crossSubDomainCookies: {
       enabled: false,
     },
-    // 🔑 IMPORTANT: Add sameSite configuration
     defaultCookieAttributes: {
       sameSite: 'none',
       secure: true,
       httpOnly: true,
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
     },
-    // ❌ Remove or comment out disableCSRFCheck
-    // disableCSRFCheck: true, // Don't disable this in production
   },
 
-  // Add CSRF protection with trusted origins
   csrf: {
     enabled: true,
     trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
   },
-
   baseURL: 'https://food-delivery-app-backend-58qb.onrender.com/api/auth',
 
   user: {
