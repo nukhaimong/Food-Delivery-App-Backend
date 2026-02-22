@@ -58,6 +58,14 @@ app.use('/order', orderRoutes);
 app.use('/reviews', reviewsRoutes);
 app.use('/users', userRoutes);
 
+app.get('/api/debug-cookies', (req, res) => {
+  console.log('Cookies received:', req.headers.cookie);
+  res.json({
+    cookies: req.headers.cookie || 'No cookies',
+    headers: req.headers,
+  });
+});
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Food Delivery App Backend is running!');
 });
