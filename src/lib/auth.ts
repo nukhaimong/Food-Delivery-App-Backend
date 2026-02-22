@@ -9,11 +9,19 @@ export const auth = betterAuth({
     provider: 'postgresql', // or "mysql", "postgresql", ...etc
   }),
   trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
-  cookies: {
-    secure: true,
-    sameSite: 'none',
-    httpOnly: true,
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day (update session expiration every day)
+    cookie: {
+      name: 'session_token',
+      attributes: {
+        secure: true,
+        sameSite: 'none',
+        httpOnly: true,
+      },
+    },
   },
+
   baseURL: 'https://food-delivery-app-backend-58qb.onrender.com/api/auth',
 
   user: {
