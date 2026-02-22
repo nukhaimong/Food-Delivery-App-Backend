@@ -15,13 +15,27 @@ export const auth = betterAuth({
       maxAge: 5 * 60, // 5 minutes
     },
   },
+
   advanced: {
     cookiePrefix: 'better-auth',
     useSecureCookies: process.env.NODE_ENV === 'production',
     crossSubDomainCookies: {
       enabled: false,
     },
-    disableCSRFCheck: true, // Allow requests without Origin header (Postman, mobile apps, etc.)
+    // 🔑 IMPORTANT: Add sameSite configuration
+    defaultCookieAttributes: {
+      sameSite: 'none',
+      secure: true,
+      httpOnly: true,
+    },
+    // ❌ Remove or comment out disableCSRFCheck
+    // disableCSRFCheck: true, // Don't disable this in production
+  },
+
+  // Add CSRF protection with trusted origins
+  csrf: {
+    enabled: true,
+    trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
   },
 
   baseURL: 'https://food-delivery-app-backend-58qb.onrender.com/api/auth',
