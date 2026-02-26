@@ -142,17 +142,17 @@ const updateMeal = async (
     price?: number;
     description?: string;
     image?: string;
-    category_id: string;
-    is_available?: false;
+    category_id?: string;
+    is_available?: boolean;
   },
 ) => {
   if (
-    !data.category_id &&
-    !data.description &&
-    !data.image &&
-    !data.meal_name &&
-    !data.price &&
-    !data.is_available
+    data.meal_name === undefined &&
+    data.price === undefined &&
+    data.description === undefined &&
+    data.image === undefined &&
+    data.category_id === undefined &&
+    data.is_available === undefined
   ) {
     throw new Error('At least one field is required to update a meal');
   }

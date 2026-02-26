@@ -8,36 +8,36 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql', // or "mysql", "postgresql", ...etc
   }),
-  trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
-  session: {
-    cookieCache: {
-      enabled: true,
-      maxAge: 5 * 60 * 60 * 1000, // 5 minutes
-    },
-    expiresIn: 60 * 60 * 24 * 7, // 7 days - PERSISTENT LOGIN
-    updateAge: 60 * 60 * 24, // Update every 24 hours
-  },
+  trustedOrigins: [process.env.APP_URL as string],
+  // session: {
+  //   cookieCache: {
+  //     enabled: true,
+  //     maxAge: 5 * 60 * 60 * 1000, // 5 minutes
+  //   },
+  //   expiresIn: 60 * 60 * 24 * 7, // 7 days - PERSISTENT LOGIN
+  //   updateAge: 60 * 60 * 24, // Update every 24 hours
+  // },
 
-  advanced: {
-    cookiePrefix: 'better-auth',
-    useSecureCookies: true,
-    crossSubDomainCookies: {
-      enabled: false,
-    },
-    defaultCookieAttributes: {
-      sameSite: 'none',
-      secure: true,
-      httpOnly: true,
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    },
-  },
+  // advanced: {
+  //   cookiePrefix: 'better-auth',
+  //   useSecureCookies: true,
+  //   crossSubDomainCookies: {
+  //     enabled: false,
+  //   },
+  //   defaultCookieAttributes: {
+  //     sameSite: 'none',
+  //     secure: true,
+  //     httpOnly: true,
+  //     path: '/',
+  //     maxAge: 60 * 60 * 24 * 7, // 7 days
+  //   },
+  // },
 
-  csrf: {
-    enabled: true,
-    trustedOrigins: ['https://food-delivery-app-frontend-umber.vercel.app'],
-  },
-  baseURL: 'https://food-delivery-app-backend-58qb.onrender.com/api/auth',
+  // csrf: {
+  //   enabled: true,
+  //   trustedOrigins: process.env.APP_URL,
+  // },
+  baseURL: process.env.BETTER_AUTH_URL,
 
   user: {
     additionalFields: {
