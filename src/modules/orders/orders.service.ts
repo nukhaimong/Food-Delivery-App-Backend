@@ -84,6 +84,11 @@ const getOrderByProviderId = async (provider_id: string) => {
             restaurant_name: true,
           },
         },
+        meal: {
+          select: {
+            meal_name: true,
+          },
+        },
       },
     });
     return order;
