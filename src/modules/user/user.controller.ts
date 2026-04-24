@@ -118,10 +118,30 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+const getMe = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.id as string;
+    const user = await userService.getMe(userId);
+    return res.status(200).json({
+      success: true,
+      message: 'user fetched successfully',
+      user,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message || 'Server Side Error',
+      });
+    }
+  }
+};
+
 export const userController = {
   getAllUsers,
   getUserById,
   updatedUser,
   suspendOrActivateUser,
   deleteUser,
+  getMe,
 };
